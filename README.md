@@ -1,0 +1,1 @@
+This repository showcases a variety of workflows built using n8n, an open-source workflow automation tool. Each workflow is designed to streamline repetitive tasks and connect different apps or services with minimal manual effort. Ideal for learning, reuse, or inspiration.
