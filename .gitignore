@@ -1,0 +1,21 @@
+# Ignore node modules (if any)
+node_modules/
+
+# Ignore environment files (often contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore logs
+*.log
+
+# Ignore n8n credentials (if you export them separately)
+credentials.json
+
+# Ignore any generated files you don’t want to track
+dist/
+build/
