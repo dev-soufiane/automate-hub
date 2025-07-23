@@ -37,7 +37,7 @@
             {
               "id": "076f9552-dbcd-409f-afe9-670e59975ef9",
               "leftValue": "={{ $json.classType }}",
-              "rightValue": "C",
+              "rightValue": "X",
               "operator": {
                 "type": "string",
                 "operation": "contains"
