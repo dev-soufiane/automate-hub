@@ -1,0 +1,201 @@
+{
+  "name": "NASA DONKI solar flare",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                1
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "308a23d1-8d89-48ba-ac7b-c8ccb2a23cc0",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "076f9552-dbcd-409f-afe9-670e59975ef9",
+              "leftValue": "={{ $json.classType }}",
+              "rightValue": "C",
+              "operator": {
+                "type": "string",
+                "operation": "contains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "91514ed2-d635-44c4-b27c-f89a1a90e7e6",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "resource": "request",
+        "operation": "send",
+        "binId": "1753228317342-6749809265602",
+        "binContent": "=There was a solar flare of class {{ $json.classType }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.postBin",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -100
+      ],
+      "id": "846f0bcb-272e-4ac7-8b24-6d0fd8db48f7",
+      "name": "Request to PostBin (True)"
+    },
+    {
+      "parameters": {
+        "resource": "request",
+        "operation": "send",
+        "binId": "1753228317342-6749809265602",
+        "binContent": "=There was a solar flare of class {{ $json.classType }}",
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.postBin",
+      "typeVersion": 1,
+      "position": [
+        660,
+        80
+      ],
+      "id": "7402ad56-5dbf-4a5d-b4be-707b35270b5c",
+      "name": "Request to PostBin (False)"
+    },
+    {
+      "parameters": {
+        "resource": "donkiSolarFlare",
+        "additionalFields": {
+          "startDate": "={{ $today.minus(7, 'days') }}"
+        }
+      },
+      "type": "n8n-nodes-base.nasa",
+      "typeVersion": 1,
+      "position": [
+        220,
+        0
+      ],
+      "id": "bbf43d00-58cc-4ba6-9f9e-b825fdddc523",
+      "name": "NASA",
+      "credentials": {
+        "nasaApi": {
+          "id": "Bw3zmHJ6Xd1bdJbF",
+          "name": "NASA account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "NASA": [
+      {
+        "json": {
+          "flrID": "2025-07-19T08:56:00-FLR-001",
+          "catalog": "M2M_CATALOG",
+          "instruments": [
+            {
+              "displayName": "GOES-P: EXIS 1.0-8.0"
+            }
+          ],
+          "beginTime": "2025-07-19T08:56Z",
+          "peakTime": "2025-07-19T09:07Z",
+          "endTime": "2025-07-19T09:13Z",
+          "classType": "C3.3",
+          "sourceLocation": "S08W84",
+          "activeRegionNum": 14135,
+          "note": "",
+          "submissionTime": "2025-07-19T19:57Z",
+          "versionId": 1,
+          "link": "https://webtools.ccmc.gsfc.nasa.gov/DONKI/view/FLR/40153/-1",
+          "linkedEvents": [
+            {
+              "activityID": "2025-07-19T10:24:00-CME-001"
+            }
+          ],
+          "sentNotifications": null
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "NASA",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Request to PostBin (True)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Request to PostBin (False)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NASA": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "a1d4f421-a9d9-4d89-be75-5b1ea70d77a0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "bd7ef18d5e770cd0e048e1830c77fe79d6f4f4bfddc05572c37c4640d6e02247"
+  },
+  "id": "0bPLZZKesVYxOYtu",
+  "tags": []
+}
